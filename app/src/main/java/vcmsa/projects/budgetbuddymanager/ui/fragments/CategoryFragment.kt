@@ -1,0 +1,77 @@
+package vcmsa.projects.budgetbuddymanager.ui.fragments
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import vcmsa.projects.budgetbuddymanager.databinding.FragmentCategoryBinding
+import vcmsa.projects.budgetbuddymanager.data.entities.Category
+import vcmsa.projects.budgetbuddymanager.viewmodel.CategoryViewModel
+import vcmsa.projects.budgetbuddymanager.viewmodel.CategoryViewModelFactory
+
+class CategoryFragment : Fragment() {
+    private var _binding: FragmentCategoryBinding? = null
+    private val binding get() = _binding!!
+
+    private val categoryViewModel: CategoryViewModel by lazy {
+        val app = requireActivity().application as vcmsa.projects.budgetbuddymanager.BudgetBuddyApp
+        androidx.lifecycle.ViewModelProvider(
+            this,
+            CategoryViewModelFactory(app.categoryRepository)
+        )[CategoryViewModel::class.java]
+    }
+
+    companion object {
+        private const val USER_ID = "user_id"
+        fun newInstance(userId: Long) = CategoryFragment().apply {
+            arguments = Bundle().apply { putLong(USER_ID, userId) }
+        }
+    }
+
+    private var userId: Long = 0L
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        userId = arguments?.getLong(USER_ID) ?: 0L
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        categoryViewModel.getCategoriesForUser(userId)
+
+        binding.btnAddCategory.setOnClickListener {
+            val name = binding.editCategoryName.text.toString()
+            if (name.isBlank()) {
+                Toast.makeText(context, "Category name required", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            categoryViewModel.insertCategory(Category(name = name, userOwnerId = userId))
+            binding.editCategoryName.text?.clear()
+        }
+
+        categoryViewModel.categories.observe(viewLifecycleOwner) { categories ->
+            binding.txtCategories.text = categories.joinToString("\n") { it.name }
+        }
+
+        binding.btnNext.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(requireActivity().findViewById<View>(vcmsa.projects.budgetbuddymanager.R.id.fragmentContainer).id,
+                    AddExpenseFragment.newInstance(userId))
+                .commit()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
