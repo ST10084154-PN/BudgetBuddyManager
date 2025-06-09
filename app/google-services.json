@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283352830854",
+    "project_id": "budgetbuddymanager-1234",
+    "storage_bucket": "budgetbuddymanager-1234.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283352830854:android:099d5d7b203e7bc870d207",
+        "android_client_info": {
+          "package_name": "vcmsa.projects.budgetbuddymanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLT0R8DQYmbPWko4C0fiXr3Y9mEtHq2v8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

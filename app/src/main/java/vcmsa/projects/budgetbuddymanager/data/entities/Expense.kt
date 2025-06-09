@@ -1,16 +1,12 @@
 package vcmsa.projects.budgetbuddymanager.data.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "expenses")
 data class Expense(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val amount: Double,
-    val description: String,
-    val startDateTime: Long,
-    val endDateTime: Long,
-    val categoryId: Long,
-    val userOwnerId: Long,
-    val photoUri: String?
+    val id: String = "",
+    val amount: Double = 0.0,
+    val description: String = "",
+    val startDateTime: Long = 0L,
+    val endDateTime: Long = 0L,
+    val categoryId: String = "",
+    val userId: String = "",
+    val photoUri: String? = null
 )

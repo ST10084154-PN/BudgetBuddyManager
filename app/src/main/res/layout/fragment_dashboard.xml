@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="18dp"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="6dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/txtDashboardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/budget_progress_dashboard"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtCurrentMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="8dp"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/donutChart"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:layout_marginTop="18dp"/>
+
+            <TextView
+                android:id="@+id/txtBudgetProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/txtOverspending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#B00020"
+                android:layout_marginTop="12dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtBadges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/badges"
+                android:layout_marginTop="18dp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:id="@+id/badgeContainer"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchDarkMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dark_mode"
+                android:layout_marginTop="24dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Back"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="20dp"/>
+        </LinearLayout>
+    </ScrollView>
+</com.google.android.material.card.MaterialCardView>

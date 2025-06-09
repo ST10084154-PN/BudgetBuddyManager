@@ -9,8 +9,12 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import vcmsa.projects.budgetbuddymanager.data.entities.Category
 import vcmsa.projects.budgetbuddymanager.data.entities.Expense
 import vcmsa.projects.budgetbuddymanager.databinding.FragmentAddExpenseBinding
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseCategoryRepository
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseExpenseRepository
 import vcmsa.projects.budgetbuddymanager.viewmodel.CategoryViewModel
 import vcmsa.projects.budgetbuddymanager.viewmodel.CategoryViewModelFactory
 import vcmsa.projects.budgetbuddymanager.viewmodel.ExpenseViewModel
@@ -22,30 +26,25 @@ class AddExpenseFragment : Fragment() {
     private var _binding: FragmentAddExpenseBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var userId: String
+
     private val categoryViewModel: CategoryViewModel by lazy {
-        val app = requireActivity().application as vcmsa.projects.budgetbuddymanager.BudgetBuddyApp
-        androidx.lifecycle.ViewModelProvider(
-            this,
-            CategoryViewModelFactory(app.categoryRepository)
-        )[CategoryViewModel::class.java]
+        ViewModelProvider(this, CategoryViewModelFactory(FirebaseCategoryRepository()))
+            .get(CategoryViewModel::class.java)
     }
     private val expenseViewModel: ExpenseViewModel by lazy {
-        val app = requireActivity().application as vcmsa.projects.budgetbuddymanager.BudgetBuddyApp
-        androidx.lifecycle.ViewModelProvider(
-            this,
-            ExpenseViewModelFactory(app.expenseRepository)
-        )[ExpenseViewModel::class.java]
+        ViewModelProvider(this, ExpenseViewModelFactory(FirebaseExpenseRepository()))
+            .get(ExpenseViewModel::class.java)
     }
 
-    private var userId: Long = 0L
-    private var categoryList: List<vcmsa.projects.budgetbuddymanager.data.entities.Category> = emptyList()
-    private var selectedCategoryId: Long? = null
+    private var categoryList: List<Category> = emptyList()
+    private var selectedCategoryId: String? = null
     private var photoUri: String? = null
 
     companion object {
         private const val USER_ID = "user_id"
-        fun newInstance(userId: Long) = AddExpenseFragment().apply {
-            arguments = Bundle().apply { putLong(USER_ID, userId) }
+        fun newInstance(userId: String) = AddExpenseFragment().apply {
+            arguments = Bundle().apply { putString(USER_ID, userId) }
         }
     }
 
@@ -76,13 +75,10 @@ class AddExpenseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userId = arguments?.getLong(USER_ID) ?: 0L
+        userId = arguments?.getString(USER_ID) ?: ""
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddExpenseBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -141,14 +137,14 @@ class AddExpenseFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            expenseViewModel.insertExpense(
+            expenseViewModel.addExpense(
                 Expense(
                     amount = amount,
                     description = desc,
                     startDateTime = startMillis,
                     endDateTime = endMillis,
                     categoryId = selectedCategoryId!!,
-                    userOwnerId = userId,
+                    userId = userId,
                     photoUri = photoUri
                 )
             )

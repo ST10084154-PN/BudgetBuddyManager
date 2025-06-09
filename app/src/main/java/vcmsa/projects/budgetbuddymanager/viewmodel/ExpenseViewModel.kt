@@ -2,25 +2,30 @@ package vcmsa.projects.budgetbuddymanager.viewmodel
 
 import androidx.lifecycle.*
 import vcmsa.projects.budgetbuddymanager.data.entities.Expense
-import vcmsa.projects.budgetbuddymanager.repository.ExpenseRepository
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseExpenseRepository
 import kotlinx.coroutines.launch
 
-class ExpenseViewModel(private val repository: ExpenseRepository) : ViewModel() {
+class ExpenseViewModel(private val repository: FirebaseExpenseRepository) : ViewModel() {
 
     private val _expenses = MutableLiveData<List<Expense>>()
     val expenses: LiveData<List<Expense>> get() = _expenses
 
-    fun getExpensesByDateRange(userId: Long, startMillis: Long, endMillis: Long) {
+    fun getExpensesByDateRange(userId: String, startMillis: Long, endMillis: Long) {
         viewModelScope.launch {
-            _expenses.value = repository.getExpensesByDateRange(userId, startMillis, endMillis)
+            _expenses.value = repository.getExpensesForUserInRange(userId, startMillis, endMillis)
         }
     }
 
-    fun insertExpense(expense: Expense) {
+    fun addExpense(expense: Expense) {
         viewModelScope.launch {
-            repository.insertExpense(expense)
-            // Optionally refresh list if you want live updates here
+            repository.addExpense(expense)
+            // Optionally refresh here
+
+
         }
     }
+    fun isAmountValid(amount: Double): Boolean = amount > 0
+
 }
+
 

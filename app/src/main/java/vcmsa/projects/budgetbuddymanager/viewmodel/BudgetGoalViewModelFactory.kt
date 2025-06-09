@@ -2,9 +2,9 @@ package vcmsa.projects.budgetbuddymanager.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import vcmsa.projects.budgetbuddymanager.repository.BudgetGoalRepository
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseBudgetGoalRepository
 
-class BudgetGoalViewModelFactory(private val repository: BudgetGoalRepository) : ViewModelProvider.Factory {
+class BudgetGoalViewModelFactory(private val repository: FirebaseBudgetGoalRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BudgetGoalViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

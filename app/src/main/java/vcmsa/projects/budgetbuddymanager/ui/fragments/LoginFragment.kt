@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import vcmsa.projects.budgetbuddymanager.databinding.FragmentLoginBinding
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseAuthRepository
 import vcmsa.projects.budgetbuddymanager.viewmodel.UserViewModel
 import vcmsa.projects.budgetbuddymanager.viewmodel.UserViewModelFactory
 
@@ -15,50 +17,44 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val userViewModel: UserViewModel by lazy {
-        val app = requireActivity().application as vcmsa.projects.budgetbuddymanager.BudgetBuddyApp
-        androidx.lifecycle.ViewModelProvider(
-            this,
-            UserViewModelFactory(app.userRepository)
-        )[UserViewModel::class.java]
+        ViewModelProvider(this, UserViewModelFactory(FirebaseAuthRepository()))
+            .get(UserViewModel::class.java)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.btnLogin.setOnClickListener {
-            val username = binding.editUsername.text.toString()
+            val email = binding.editUsername.text.toString()
             val password = binding.editPassword.text.toString()
-            if (username.isBlank() || password.isBlank()) {
+            if (email.isBlank() || password.isBlank()) {
                 Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            userViewModel.login(username, password)
+            userViewModel.login(email, password)
         }
         binding.btnRegister.setOnClickListener {
-            val username = binding.editUsername.text.toString()
+            val email = binding.editUsername.text.toString()
             val password = binding.editPassword.text.toString()
-            if (username.isBlank() || password.isBlank()) {
+            if (email.isBlank() || password.isBlank()) {
                 Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            userViewModel.register(username, password)
+            userViewModel.register(email, password)
             Toast.makeText(context, "Registration complete. Please log in.", Toast.LENGTH_SHORT).show()
         }
 
-        userViewModel.loginResult.observe(viewLifecycleOwner) { user ->
-            if (user != null) {
+        userViewModel.loginResult.observe(viewLifecycleOwner) { uid ->
+            if (uid != null) {
                 parentFragmentManager.beginTransaction()
                     .replace(requireActivity().findViewById<View>(vcmsa.projects.budgetbuddymanager.R.id.fragmentContainer).id,
-                        CategoryFragment.newInstance(user.id))
+                        CategoryFragment.newInstance(uid))
                     .commit()
             } else {
-                Toast.makeText(context, "Invalid username or password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -68,4 +64,3 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 }
-

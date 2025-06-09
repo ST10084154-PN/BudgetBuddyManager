@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import vcmsa.projects.budgetbuddymanager.databinding.FragmentBudgetGoalBinding
+import androidx.lifecycle.ViewModelProvider
 import vcmsa.projects.budgetbuddymanager.data.entities.BudgetGoal
+import vcmsa.projects.budgetbuddymanager.databinding.FragmentBudgetGoalBinding
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseBudgetGoalRepository
 import vcmsa.projects.budgetbuddymanager.viewmodel.BudgetGoalViewModel
 import vcmsa.projects.budgetbuddymanager.viewmodel.BudgetGoalViewModelFactory
 import java.util.*
@@ -14,31 +16,25 @@ class BudgetGoalFragment : Fragment() {
     private var _binding: FragmentBudgetGoalBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var userId: String
     private val budgetGoalViewModel: BudgetGoalViewModel by lazy {
-        val app = requireActivity().application as vcmsa.projects.budgetbuddymanager.BudgetBuddyApp
-        androidx.lifecycle.ViewModelProvider(
-            this,
-            BudgetGoalViewModelFactory(app.budgetGoalRepository)
-        )[BudgetGoalViewModel::class.java]
+        ViewModelProvider(this, BudgetGoalViewModelFactory(FirebaseBudgetGoalRepository()))
+            .get(BudgetGoalViewModel::class.java)
     }
-    private var userId: Long = 0L
 
     companion object {
         private const val USER_ID = "user_id"
-        fun newInstance(userId: Long) = BudgetGoalFragment().apply {
-            arguments = Bundle().apply { putLong(USER_ID, userId) }
+        fun newInstance(userId: String) = BudgetGoalFragment().apply {
+            arguments = Bundle().apply { putString(USER_ID, userId) }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userId = arguments?.getLong(USER_ID) ?: 0L
+        userId = arguments?.getString(USER_ID) ?: ""
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBudgetGoalBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -84,13 +80,13 @@ class BudgetGoalFragment : Fragment() {
                 return@setOnClickListener
             }
             val goal = BudgetGoal(
-                userOwnerId = userId,
+                userId = userId,
                 month = month,
                 year = year,
                 minAmount = minAmount,
                 maxAmount = maxAmount
             )
-            budgetGoalViewModel.upsertBudgetGoal(goal)
+            budgetGoalViewModel.setBudgetGoal(goal)
             Toast.makeText(context, "Budget goal saved!", Toast.LENGTH_SHORT).show()
         }
     }

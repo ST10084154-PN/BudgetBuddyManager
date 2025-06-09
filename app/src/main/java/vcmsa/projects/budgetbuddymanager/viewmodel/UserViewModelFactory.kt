@@ -2,9 +2,9 @@ package vcmsa.projects.budgetbuddymanager.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import vcmsa.projects.budgetbuddymanager.repository.UserRepository
+import vcmsa.projects.budgetbuddymanager.repository.FirebaseAuthRepository
 
-class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
+class UserViewModelFactory(private val repository: FirebaseAuthRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

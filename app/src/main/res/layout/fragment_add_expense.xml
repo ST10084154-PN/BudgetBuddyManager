@@ -1,67 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="32dp"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp">
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="6dp"
+        android:padding="22dp">
 
-        <EditText
-            android:id="@+id/editAmount"
-            android:hint="Amount"
-            android:inputType="numberDecimal"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/editDescription"
-            android:hint="Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-        <EditText
-            android:id="@+id/editStartDate"
-            android:hint="Start DateTime (yyyy-MM-dd HH:mm)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-        <EditText
-            android:id="@+id/editEndDate"
-            android:hint="End DateTime (yyyy-MM-dd HH:mm)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnAttachPhoto"
-            android:text="Attach Photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"/>
-        <ImageView
-            android:id="@+id/imgReceipt"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/txtAddExpenseTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_expense"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/btnSaveExpense"
-            android:text="Save Expense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputAmountLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount"
+                app:layout_constraintTop_toBottomOf="@id/txtAddExpenseTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnToList"
-            android:text="Go to Expenses List"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-</ScrollView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputDescLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/description"
+                app:layout_constraintTop_toBottomOf="@id/inputAmountLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputStartDateLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/start_date_time_yyyy_mm_dd_hh_mm"
+                app:layout_constraintTop_toBottomOf="@id/inputDescLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputEndDateLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/end_date_time_yyyy_mm_dd_hh_mm"
+                app:layout_constraintTop_toBottomOf="@id/inputStartDateLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/inputEndDateLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/imgReceipt"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/todo"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_baseline_receipt_24"
+                app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAttachPhoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/attach_receipt"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button"
+                app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgReceipt"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveExpense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/save_expense"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button"
+                app:layout_constraintTop_toBottomOf="@id/imgReceipt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="22dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/see_expense_list"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:layout_constraintTop_toBottomOf="@id/btnSaveExpense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="14dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.core.widget.NestedScrollView>

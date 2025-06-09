@@ -1,14 +1,10 @@
 package vcmsa.projects.budgetbuddymanager.data.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "budget_goals")
 data class BudgetGoal(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val userOwnerId: Long,
-    val month: Int, // 1-12
-    val year: Int,
-    val minAmount: Double,
-    val maxAmount: Double
+    val id: String = "",
+    val userId: String = "",
+    val month: Int = 1,
+    val year: Int = 2024,
+    val minAmount: Double = 0.0,
+    val maxAmount: Double = 0.0
 )

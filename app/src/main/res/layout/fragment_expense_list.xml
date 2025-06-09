@@ -1,47 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="32dp"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="18dp"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="6dp">
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/editFilterStart"
-            android:hint="Start (yyyy-MM-dd HH:mm)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/editFilterEnd"
-            android:hint="End (yyyy-MM-dd HH:mm)"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-        <Button
-            android:id="@+id/btnFilter"
-            android:text="Filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-        <TextView
-            android:id="@+id/txtExpenses"
-            android:text="Expenses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"/>
+            android:padding="18dp">
 
-        <TextView
-            android:id="@+id/txtTotals"
-            android:text="Totals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"/>
-        <Button
-            android:id="@+id/btnBudget"
-            android:text="Go to Budget Goals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/txtListTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expense_list"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/start_yyyy_mm_dd_hh_mm"
+                android:layout_marginTop="14dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editFilterStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/end_yyyy_mm_dd_hh_mm"
+                android:layout_marginTop="6dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editFilterEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apply_date_filter"
+                style="@style/Widget.MaterialComponents.Button"
+                app:cornerRadius="16dp"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/txtExpenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="?android:textColorPrimary"
+                android:paddingTop="18dp"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/txtTotals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingTop="12dp"
+                android:textColor="?android:textColorSecondary"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/budget_goal"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="22dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_graph"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_marginTop="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dashboard"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.google.android.material.card.MaterialCardView>

@@ -1,48 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="32dp"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="18dp"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="6dp">
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/txtCurrentGoal"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Current Goal"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="20dp"/>
+            android:padding="22dp">
 
-        <TextView
-            android:id="@+id/txtMinValue"
-            android:text="Min: R0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <SeekBar
-            android:id="@+id/seekMin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="5000"/>
-        <TextView
-            android:id="@+id/txtMaxValue"
-            android:text="Max: R0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-        <SeekBar
-            android:id="@+id/seekMax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="20000"/>
+            <TextView
+                android:id="@+id/txtGoalTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monthly_budget_goal"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/btnSaveBudget"
-            android:text="Save Budget Goal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/txtCurrentGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/txtMinValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_r0"
+                android:layout_marginTop="18dp"/>
+            <SeekBar
+                android:id="@+id/seekMin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="5000"/>
+            <TextView
+                android:id="@+id/txtMaxValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_r0"
+                android:layout_marginTop="12dp"/>
+            <SeekBar
+                android:id="@+id/seekMax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="20000"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_budget"
+                app:cornerRadius="16dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_marginTop="24dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.google.android.material.card.MaterialCardView>
