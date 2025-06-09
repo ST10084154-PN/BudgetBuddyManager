@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.insertImage
 import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -67,8 +68,11 @@ class AddExpenseFragment : Fragment() {
 
     private fun saveImageToGallery(bitmap: android.graphics.Bitmap): Uri? {
         val resolver = requireActivity().contentResolver
-        val imageUri = MediaStore.Images.Media.insertImage(
-            resolver, bitmap, "BudgetBuddyReceipt", "Receipt Photo"
+        val imageUri = insertImage(
+            /* cr = */ resolver, /* source = */
+            bitmap, /* title = */
+            "BudgetBuddyReceipt", /* description = */
+            "Receipt Photo"
         )
         return imageUri?.toUri()
     }
